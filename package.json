@@ -14,14 +14,17 @@
   },
   "devDependencies": {
     "flow-bin": "^0.39.0",
+    "flow-watch": "^1.1.0",
     "jest": "^18.1.0",
     "jest-cli": "^18.1.0"
   },
   "scripts": {
     "start": "babel-node src/index.js",
     "test": "jest",
+    "test:watch": "jest --watch",
     "build": "babel -d lib src",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "flow:watch": "flow-watch"
   },
   "jest": {
     "rootDir": "src"
