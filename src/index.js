@@ -3,13 +3,24 @@
 import P from 'bluebird';
 import Readline from 'readline';
 
+import { dimensions } from "./dimensions";
 import type { Dimension } from "./dimensions";
 
-console.log("qubesim");
+import { generateDrinks, describeDrink } from "./drinks";
+import type { Drink } from "./drinks";
 
-askForNumberOfDrinks().then(numberOfDrinks => {
-  console.log("Generating " + numberOfDrinks + " drinks");
-});
+import log from "./log";
+
+println("qubesim");
+
+askForNumberOfDrinks().then(generateDrinks).then(printDrinks);
+
+function printDrinks(drinks: Array<Drink>) {
+  drinks.forEach(drink => {
+    println("==========");
+    println(describeDrink(drink));
+  });
+}
 
 function askForNumberOfDrinks() {
   const readline = Readline.createInterface({
@@ -28,4 +39,8 @@ function askForNumberOfDrinks() {
       readline.close();
     });
   });
+}
+
+function println(str: string) {
+  console.log(str);
 }

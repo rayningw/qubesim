@@ -6,7 +6,7 @@ export type Dimension = {
   defaultOption?: string,
 }
 
-export const dimensions = [
+export const dimensions: Array<Dimension> = [
   {
     name: 'recipe',
     options: [
@@ -31,7 +31,7 @@ export const dimensions = [
   {
     name: 'bean',
     options: [
-      'house', 'decaf', 'guest',
+      'house', 'decaf', 'guest bean',
     ],
     defaultOption: 'house',
   },
@@ -51,7 +51,7 @@ export const dimensions = [
   },
   {
     name: 'warm / iced',
-    option: [
+    options: [
       'warm', 'on ice',
     ],
     defaultOption: 'warm',
