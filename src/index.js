@@ -9,6 +9,8 @@ import type { Dimension } from "./dimensions";
 import { generateDrinks, describeDrink } from "./drinks";
 import type { Drink } from "./drinks";
 
+import { addBorder } from "./docket";
+
 import log from "./log";
 
 println("qubesim");
@@ -18,7 +20,7 @@ askForNumberOfDrinks().then(generateDrinks).then(printDrinks);
 function printDrinks(drinks: Array<Drink>) {
   drinks.forEach(drink => {
     println("==========");
-    println(describeDrink(drink));
+    println(addBorder(describeDrink(drink)));
   });
 }
 
