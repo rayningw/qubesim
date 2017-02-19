@@ -1,6 +1,6 @@
 //@flow
 
-import { makeDrink } from "./drinks";
+import { describeDrink, makeDrink } from "./drinks";
 import type { Drink } from "./drinks";
 
 export type Order = {
@@ -8,8 +8,18 @@ export type Order = {
   drinks: Array<Drink>,
 };
 
+export function describeOrder(order: Order): string {
+  const lines = []
+  lines.push(`Customer: ${order.customer || '(unspecified)'}`);
+  order.drinks.forEach((drink, idx) => {
+    lines.push(`Drink ${idx+1}:`);
+    lines.push(describeDrink(drink));
+  });
+  return lines.join("\n");
+}
+
 // Orders ordered regularly by customers
-export const recurringOrders = [
+export const recurringOrders: Array<Order> = [
   {
     customer: "Richard",
     drinks: [
@@ -78,7 +88,7 @@ export const recurringOrders = [
       makeDrink({
         recipe: 'flat white',
         size: 'large',
-        milk: 'skiny',
+        milk: 'skinny',
       }),
     ],
   },
@@ -109,4 +119,4 @@ export const recurringOrders = [
       }),
     ],
   },
-]
+];

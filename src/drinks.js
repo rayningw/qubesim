@@ -3,6 +3,7 @@
 import { dimensions } from "./dimensions";
 
 import log from "./log";
+import { selectUniform } from "./selectors";
 
 export type Drink = {
   properties: { [ key: string ]: string }
@@ -26,16 +27,6 @@ export function makeDrink(specializedProperties: { [ key: string ]: string }) {
   return {
     properties: Object.assign({}, baseDrink.properties, specializedProperties),
   };
-}
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
-function selectUniform(arr: Array<any>) {
-  return arr[getRandomInt(0, arr.length)];
 }
 
 export function randomDrink() {

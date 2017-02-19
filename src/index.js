@@ -1,7 +1,6 @@
 //@flow
 
 import P from 'bluebird';
-import Readline from 'readline';
 
 import { dimensions } from "./dimensions";
 import type { Dimension } from "./dimensions";
@@ -11,11 +10,33 @@ import type { Drink } from "./drinks";
 
 import { addBorder } from "./docket";
 
+import { quizRecurringOrders } from "./orders-quiz";
+
+import { question, println } from "./io";
 import log from "./log";
 
 println("qubesim");
+showMenu().then(() => {
+  println("Farewell");
+});
 
-askForNumberOfDrinks().then(generateDrinks).then(printDrinks);
+function showMenu() {
+  return question(`
+What do you want to do?
+1) Generate random drinks.
+2) Quiz on recurring orders.
+*) Quit.
+Please respond: `).then(answer => {
+    switch (answer.trim()) {
+      case '1':
+        return askForNumberOfDrinks().then(generateDrinks).then(printDrinks).then(showMenu);
+      case '2':
+        return quizRecurringOrders().then(showMenu);
+      default:
+        return P.resolve();
+    }
+  });
+}
 
 function printDrinks(drinks: Array<Drink>) {
   drinks.forEach(drink => {
@@ -25,24 +46,12 @@ function printDrinks(drinks: Array<Drink>) {
 }
 
 function askForNumberOfDrinks() {
-  const readline = Readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
+  return question("How many drinks? ").then(answer => {
+    try {
+      return parseInt(answer);
+    } catch(e) {
+      console.log("Sorry, that is not a number");
+      return Promise.reject(new Error("Could not parse answer"));
+    }
   });
-
-  return new P((resolve, reject) => {
-    readline.question("How many drinks? ", answer => {
-      try {
-        resolve(parseInt(answer));
-      } catch(e) {
-        console.log("Sorry, that is not a number");
-        reject(new Error("Could not parse answer"));
-      }
-      readline.close();
-    });
-  });
-}
-
-function println(str: string) {
-  console.log(str);
 }
