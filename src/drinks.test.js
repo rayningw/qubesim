@@ -1,18 +1,6 @@
 //@flow
 
-import { describeDrink } from "./drinks";
-
-const baseDrink = {
-  properties: {
-    recipe: 'latte',
-    size: 'regular',
-    strength: 'regular',
-    bean: 'house',
-    sweetener: 'none',
-    'dine in / takeaway': 'takeaway',
-    'warm / iced': 'warm',
-  },
-};
+import { describeDrink, makeDrink } from "./drinks";
 
 test("describeDrink", () => {
   expectDrinkToBeDescribedAs({}, `
@@ -20,7 +8,7 @@ latte`);
 
   expectDrinkToBeDescribedAs({
     recipe: 'flat white', size: 'large', strength: 'strong', bean: 'decaf', sweetener: '1 sugar',
-    'dine in / takeaway': 'dine in', 'warm / iced': 'iced',
+    service: 'dine in', temperature: 'iced',
   }, `
 flat white
 large
@@ -32,9 +20,6 @@ iced`);
 });
 
 function expectDrinkToBeDescribedAs(specializedProperties, desc) {
-  const properties = Object.assign({}, baseDrink.properties, specializedProperties);
-  const drink = {
-    properties,
-  };
+  const drink = makeDrink(specializedProperties);
   expect(describeDrink(drink)).toBe(desc.trim());
 }

@@ -8,6 +8,26 @@ export type Drink = {
   properties: { [ key: string ]: string }
 }
 
+const baseDrink = {
+  properties: {
+    recipe: 'latte',
+    size: 'regular',
+    strength: 'regular',
+    bean: 'house',
+    milk: 'whole',
+    dashmilk: 'none',
+    sweetener: 'none',
+    service: 'takeaway',
+    temperature: 'warm',
+  },
+}
+
+export function makeDrink(specializedProperties: { [ key: string ]: string }) {
+  return {
+    properties: Object.assign({}, baseDrink.properties, specializedProperties),
+  };
+}
+
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -42,6 +62,9 @@ export function describeDrink(drink: Drink): string {
   const lines = [];
   dimensions.forEach(dimension => {
     const property = drink.properties[dimension.name];
+    if (!property) {
+      throw new Error(`Property ${dimension.name} not defined in drink: ${JSON.stringify(drink)}`);
+    }
     if (dimension.defaultOption != property) {
       lines.push(property);
     }

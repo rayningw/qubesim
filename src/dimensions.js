@@ -38,21 +38,36 @@ export const dimensions: Array<Dimension> = [
   {
     name: 'sweetener',
     options: [
-      'none', '1 sugar', '2 sugars', '3 sugars', '1 equal', '2 equal',
+      'none', '1 sugar', '2 sugars', '3 sugars', '1 equal', '3 splendours',
     ],
     defaultOption: 'none',
   },
   {
-    name: 'dine in / takeaway',
+    name: 'milk',
+    options: [
+      'whole', 'skinny', 'soy', 'almond',
+    ],
+    defaultOption: 'whole',
+  },
+  // Additional dash of milk
+  {
+    name: 'dashmilk',
+    options: [
+      'none', 'dash of milk',
+    ],
+    defaultOption: 'none',
+  },
+  {
+    name: 'service',
     options: [
       'takeaway', 'dine in',
     ],
     defaultOption: 'takeaway',
   },
   {
-    name: 'warm / iced',
+    name: 'temperature',
     options: [
-      'warm', 'on ice',
+      'warm', 'hot', 'on ice',
     ],
     defaultOption: 'warm',
   },
